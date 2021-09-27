@@ -66,7 +66,13 @@ const pubsub =
     ? new GooglePubSub(googlePubSubOptions)
     : new PubSub();
 
-const server = new ApolloServer({
+// Set pubsub as universal context
+app.use((req, res, next) => {
+  req.pubsub = pubsub;
+  return next();
+});
+
+const apolloServer = new ApolloServer({
   schema,
   context: async ({ req, res }) => {
     return {
@@ -78,6 +84,7 @@ const server = new ApolloServer({
   playground: process.env.NODE_ENV === "production" ? false : true,
 });
 
+
 app.use(
   "/graphql",
   graphqlHTTP({
@@ -86,7 +93,7 @@ app.use(
   })
 );
 
-server.applyMiddleware({
+apolloServer.applyMiddleware({
   app,
 });
 
@@ -98,7 +105,7 @@ app.get(
 );
 
 const httpServer = http.createServer(app);
-server.installSubscriptionHandlers(httpServer);
+apolloServer.installSubscriptionHandlers(httpServer);
 
 const port = process.env.PORT || 4000;
 
@@ -106,8 +113,8 @@ httpServer.listen(port, () => {
   console.log(
     `🚀 Server ready at ${
       process.env.NODE_ENV === "production"
-        ? process.env.PRODUCTION_SERVER_URL + server.graphqlPath
-        : "http://localhost:" + port + server.graphqlPath
+        ? process.env.PRODUCTION_SERVER_URL + apolloServer.graphqlPath
+        : "http://localhost:" + port + apolloServer.graphqlPath
     }`
   );
   console.log(
@@ -115,8 +122,8 @@ httpServer.listen(port, () => {
       process.env.NODE_ENV === "production"
         ? "wss://" +
           process.env.PRODUCTION_SERVER_ROOT +
-          server.subscriptionsPath
-        : "ws://localhost:" + port + server.subscriptionsPath
+          apolloServer.subscriptionsPath
+        : "ws://localhost:" + port + apolloServer.subscriptionsPath
     }`
   );
 });
