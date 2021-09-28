@@ -16,7 +16,7 @@ const AppointmentSchema = new Schema({
   bookedWithCardID: String,
   client: Client.schema.obj,
   professional: String,
-  treatments: [{ name: String, price: Number, duration: Number }],
+  services: [{ name: String, price: Number, duration: Number }],
   confirmed: { type: Boolean, default: false },
   notes: String,
 });

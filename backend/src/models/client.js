@@ -7,6 +7,7 @@ const currentDate = new Date().toISOString();
 
 const ClientSchema = new Schema({
   _id: mongoose.Schema.Types.ObjectId,
+  customerId: String,
   firstName: String,
   lastName: String,
   email: String,
