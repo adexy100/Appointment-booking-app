@@ -1,7 +1,6 @@
 const graphql = require("graphql");
-const AddOnType = require("./AddOnType");
 const ClientType = require("./ClientType");
-const TreatmentType = require("./TreatmentType");
+const ServiceType = require("./ServiceType");
 
 const {
   GraphQLObjectType,
@@ -28,7 +27,7 @@ const AppointmentType = new GraphQLObjectType({
     createdAt: { type: GraphQLString },
     bookedWithCardID: { type: GraphQLString },
     client: { type: ClientType },
-    services: { type: new GraphQLList(TreatmentType) },
+    services: { type: new GraphQLList(ServiceType) },
     notes: { type: GraphQLString },
     confirmed: { type: GraphQLBoolean },
   }),

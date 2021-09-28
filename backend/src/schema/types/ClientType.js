@@ -1,6 +1,4 @@
 const graphql = require("graphql");
-const ConsentFormType = require("./ConsentFormType");
-const MyRoutineType = require("./MyRoutineType");
 
 const {
   GraphQLObjectType,
@@ -27,8 +25,6 @@ const ClientType = new GraphQLObjectType({
     accessToken: { type: GraphQLString },
     refreshToken: { type: GraphQLString },
     tokenCount: { type: GraphQLInt },
-    consentForm: { type: ConsentFormType },
-    myRoutine: { type: MyRoutineType },
     createdAt: { type: GraphQLString },
   }),
 });

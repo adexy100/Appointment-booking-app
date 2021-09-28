@@ -9,6 +9,7 @@ const { GooglePubSub } = require("@axelspringer/graphql-google-pubsub");
 const schema = require("./schema/schema");
 const mongoose = require("mongoose");
 const cors = require("cors");
+const http = require("http");
 const cookieParser = require("cookie-parser");
 const Appointment = require("./models/appointment");
 const Client = require("./models/client");
